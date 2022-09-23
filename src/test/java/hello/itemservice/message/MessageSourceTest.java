@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -21,8 +22,13 @@ public class MessageSourceTest {
 
         // when
         assertThat(result).isEqualTo("안녕");
+    }
 
-        // then
+    @Test
+    void notFoundMessage() {
 
+        // given
+        assertThatThrownBy(() -> ms.getMessage("no_code", null, null))
+                .isInstanceOf(NoSuchMessageException.class);
     }
 }
